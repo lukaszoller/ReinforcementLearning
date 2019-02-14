@@ -31,7 +31,7 @@ for runs in range(0,runs):
     # initialize action estimates
     actionEstimates = np.zeros(numberOfArms)
     # initialize true action values
-    trueActionValues = np.random.normal(0, 1, 10)
+    trueActionValues = np.random.normal(0, 1, numberOfArms)
 
     # Reward function
     def reward(action):
@@ -67,8 +67,8 @@ for runs in range(0,runs):
         stepCount += 1
 
 
-plt.plot(averageRewardArray)
+plt.plot(averageRewardArray/runs)
 plt.show()
 
-plt.plot(optimalActionArray)
+plt.plot(optimalActionArray/runs)
 plt.show()

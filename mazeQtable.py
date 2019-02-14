@@ -5,9 +5,7 @@
 # Source: https://www.mathworks.com/examples/matlab/community/36132-maze-solving-using-q-learning-algorithm
 #
 
-install.packages("data.table")
-library(ggplot2)
-
+import numpy as np
 
 ## Create Maze
 # Parameters
@@ -24,6 +22,8 @@ goalValue = 10
 maze <- matrix(wallPenalty,n,n)
 
 # add paths
+for i in range(1, (n-3)*n):
+
 for (i in 1:((n-3)*n)) {
 maze[sample(1:n, 1), sample(1:n, 1)]= pathValue
 }
