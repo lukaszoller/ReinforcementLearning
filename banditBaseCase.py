@@ -2,9 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ############################################################################
-# k-armed bandit
+# this is a replica of the 10-armed Testbed
 
-# this is a replica of the 10-armed Testbed (Chapter 2.3)
+# Barto, Sutton (2018): Reinforcement Learning. An Introduction. Second Edition.
+# Cambridge. p.28.
 
 ############################################################################
 

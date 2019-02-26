@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ############################################################################
-# k-armed bandit, nonstationary (Exercise 2.5)
+# Solution of exercise 2.5: k-armed bandit, nonstationary
+#
+# Barto, Sutton (2018): Reinforcement Learning. An Introduction. Second Edition.
+# Cambridge. p.33.
 
 # this is a modified version of the base bandit problem
 # other than the base case, the q*(a) start out equal and then take independent
@@ -33,7 +36,7 @@ for runs in range(0,runs):
 
     # initialize action estimates
     actionEstimates = np.zeros(numberOfArms)
-    # initialize true action values
+    # initialize true action values --> All q*(a) start equal
     changingActionValues = np.zeros(numberOfArms)
 
     # Reward function
@@ -42,8 +45,6 @@ for runs in range(0,runs):
         a normal distribution with mean q*(a) (trueActionValue) and variance 1"""
         return np.random.normal(changingActionValues[action], 1, 1)
 
-    # for i in range(1,100):
-    #     print(reward(1))
 
     # Algorithm
     while stepCount < maxSteps:
@@ -58,6 +59,14 @@ for runs in range(0,runs):
     # Evaluation : Check if optimal action is chosen and store information in optimalActionArray
         if action == np.argmax(changingActionValues):
             optimalActionArray[stepCount] = optimalActionArray[stepCount]+1
+
+    ################ Difference to banditBaseCase ######################################################################
+    # Change q*(a): each step a random increment is added to the true values
+    # mean = 0; standard deviation = 0.01
+        changingActionValues[action] = changingActionValues[action] + np.random.normal(0, 0.01, 1)
+
+    ################ Difference to banditBaseCase ######################################################################
+
 
     # get Reward
         r = reward(action)
