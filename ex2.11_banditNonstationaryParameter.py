@@ -15,9 +15,9 @@ import matplotlib.pyplot as plt
 ############################################################################
 
 # number of runs
-runs = 200
+runs = 1000
 # maximum steps
-maxSteps = 2000
+maxSteps = 20000
 
 # prepare parameter array
 exponentArray = range(-7, 3)
@@ -48,6 +48,8 @@ for i in range(0, len(parameterArray)):
 
         # Stepcount
         stepCount = 1
+        # Average denominator (get average over the last ... steps)
+        avgDenominator = 10000
 
         # initialize action estimates
         actionEstimates = np.zeros(numberOfArms)
@@ -83,14 +85,19 @@ for i in range(0, len(parameterArray)):
             r = reward(action)
             # change Action Values (nonstationary Problem)
             changingActionValues = changingActionValues + np.random.normal(0, 0.01, 1)
-            # update action Estimates
-            actionEstimates[action] = actionEstimates[action] + 1/stepCount * (r - actionEstimates[action])
+
+            # Update action Estimates (average of last [averageDenominator] steps)
+            if stepCount < avgDenominator:          # this is the common average with stepsize = 1/n
+                actionEstimates[action] = actionEstimates[action] + 1/stepCount * (r - actionEstimates[action])
+            else:
+                actionEstimates[action] = (avgDenominator-1)*actionEstimates[action]/avgDenominator + 1/avgDenominator * (r - actionEstimates[action])
 
             # Evaluation: update average reward per run (over all steps)
             avgRewardPerRun = avgRewardPerRun + (r - avgRewardPerRun)*1/stepCount
 
             # increase stepCount
             stepCount += 1
+
 
         # update average reward per parameter (over all runs)
         avgRewardPerParameter = avgRewardPerParameter + (avgRewardPerRun - avgRewardPerParameter)*1/runCounter
